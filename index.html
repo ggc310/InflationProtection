@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commodities &amp; Inflation Protection — Multi-Asset Research</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:        #2B3A52;
+      --navy-dark:   #1E2A3E;
+      --navy-light:  #3D5068;
+      --accent-bar:  #2B3A52;
+      --gray-100:    #F5F6F8;
+      --gray-200:    #E8EBF0;
+      --gray-400:    #9BA4B4;
+      --gray-500:    #7A8494;
+      --gray-700:    #4A5568;
+      --white:       #FFFFFF;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--gray-100);
+      color: var(--navy);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── Top accent bar (matches PDF header stripe) ── */
+    .top-bar {
+      height: 5px;
+      background: var(--navy);
+      width: 100%;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 2.5rem 2rem 2rem;
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .header-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 0.75rem;
+    }
+
+    .header-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-subtitle {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gray-500);
+    }
+
+    .header-date {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--gray-400);
+      margin-top: 0.35rem;
+    }
+
+    /* ── Main content ── */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ── Info cards row (mirrors executive-summary cards) ── */
+    .info-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .info-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-left: 3px solid var(--accent-bar);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .info-card-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.35rem;
+    }
+
+    .info-card-text {
+      font-size: 0.82rem;
+      color: var(--gray-700);
+      line-height: 1.55;
+    }
+
+    /* ── PDF viewer container ── */
+    .viewer-wrapper {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(43, 58, 82, 0.06);
+    }
+
+    .viewer-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .viewer-toolbar-title {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      opacity: 0.9;
+    }
+
+    .viewer-toolbar-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.45rem 1rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, opacity 0.15s;
+    }
+
+    .btn-light {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--white);
+    }
+
+    .btn-light:hover { background: rgba(255, 255, 255, 0.25); }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--navy);
+    }
+
+    .btn-white:hover { opacity: 0.85; }
+
+    .btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+    .pdf-embed {
+      width: 100%;
+      height: 80vh;
+      min-height: 600px;
+      border: none;
+      display: block;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-text {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .header-title { font-size: 1.6rem; }
+      .info-cards { grid-template-columns: 1fr; }
+      .main { padding: 1.25rem; }
+      .viewer-toolbar { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+      .pdf-embed { height: 70vh; min-height: 450px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-label">Multi-Asset Research</div>
+      <h1 class="header-title">Commodities &amp; Inflation Protection</h1>
+      <p class="header-subtitle">Asset Class Deep Dive &amp; Multi-Asset Strategy Framework</p>
+      <p class="header-date">Updated Through YE 2025</p>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Summary cards -->
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="info-card-title">Scope</div>
+        <div class="info-card-text">
+          Covers commodity fundamentals, historical performance, correlation analysis, individual commodity profiles, TIPS, REITs, and a four-regime multi-asset inflation strategy.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Key Takeaway</div>
+        <div class="info-card-text">
+          Combining broad commodities, gold, TIPS, REITs, and commodity equities creates an all-weather inflation protection sleeve across rising inflation, stagflation, and deflation.
+        </div>
+      </div>
+    </div>
+
+    <!-- PDF Viewer -->
+    <div class="viewer-wrapper">
+      <div class="viewer-toolbar">
+        <span class="viewer-toolbar-title">Commodities_Inflation_Protection_v3.pdf &mdash; 46 pages</span>
+        <div class="viewer-toolbar-actions">
+          <a class="btn btn-light" href="Commodities_Inflation_Protection_v3.pdf" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            Open in New Tab
+          </a>
+          <a class="btn btn-white" href="Commodities_Inflation_Protection_v3.pdf" download>
+            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Download
+          </a>
+        </div>
+      </div>
+      <embed class="pdf-embed" src="Commodities_Inflation_Protection_v3.pdf" type="application/pdf">
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span class="footer-text">Multi-Asset Research</span>
+    <span class="footer-text">For informational purposes only. Not investment advice.</span>
+  </footer>
+
+</body>
+</html>
